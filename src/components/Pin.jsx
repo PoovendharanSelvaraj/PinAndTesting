@@ -16,22 +16,40 @@ const Pin = ({leng,onChange}) => {
           inputRef.current[index+1].focus();
           
         }
-        onChange(inputBoxValue.join(""))
+      
+          onChange(inputBoxValue.join(""))
+       
+        
     console.log(inputBoxValue)
 
     }
     const handleBackSpace=(e,index)=>{
        if(index>0){
         inputRef.current[index-1].focus();
-        // inputBoxValue[index]=e.target.value; 
-       }
-      
+       }    
+       inputBoxValue[index] = e.target.value;
+       setInputBoxValue(inputBoxValue)
+       onChange(inputBoxValue.join(""))
+
+    }
+    const handlePaste = (e)=>{
+      e.preventDefault();
+      const data = e.clipboardData.getData("text")
+      .split("").filter((item,index)=>index<leng);
+      data.forEach((value,index) =>{
+        inputBoxValue[index]=value;
+        inputRef.current[index].value = value;
+        if(index < leng -1){
+          inputRef.current[index+1].focus();
+        }
+      })
     }
   return (
-    <div style={{display:"flex", justifyContent:"center"}} >
+    <div style={{display:"flex", justifyContent:"center"}} onPaste={handlePaste} >
         {inputBox.map((item,index) =>{
             return (
-               <PinItem key={index} ref={(element)=>{
+               <PinItem key={index} 
+                ref={(element)=>{
                      inputRef.current[index] = element}}
                       handleChange={(e)=>handleChange(e,index)} 
                      onBackSpaceHandler={(e)=>handleBackSpace(e,index)}/>
