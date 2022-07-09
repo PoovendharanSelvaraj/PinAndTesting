@@ -10,9 +10,10 @@ describe("Testing Sum function", ()=>{
         expect(sum(6,-5)).toBe(1);
      });
      test('adding two negative numbers', () => { 
-        expect(sum(-3,-3)).toBe(-6);
+        expect(sum()).toBe("Sum invoked without arguments");
      });
      test('getting negative numbers', () => { 
-        expect(sum(4,-5)).toBe(-1);
+        expect(sum(4)).toBe("Arguments length should be atleast 2");
      });
 });
+
